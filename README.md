@@ -57,3 +57,5 @@ git push -u origin main
 ```
 
 Replace the remote URL with your actual repository URL before sharing it. Do not submit the placeholder URL.
+# BookNest-store
+Responseive e-commerce bookstore built with Angular and AI-assisted development.
