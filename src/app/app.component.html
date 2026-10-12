@@ -1,0 +1,112 @@
+<header class="topbar">
+    <a class="brand" href="#home" aria-label="BookNest home">
+        <span class="brand-mark">b.</span>
+        <span>booknest
+            <span class="brand-dot">.</span>
+        </span>
+    </a>
+    <nav>
+        <a href="#books">Discover</a>
+        <a href="#assistant">Reading guide</a>
+        <a href="#about">Our story</a>
+    </nav>
+    <div class="top-actions"><span class="delivery">Thoughtful reads, delivered</span><button class="cart"
+            (click)="notice = cartCount ? 'Your bag has ' + cartCount + ' book(s), total ₹' + cartTotal + '.' : 'Your bag is empty — add a book to get started.'"
+            aria-label="View shopping bag">Bag <span>{{ cartCount }}</span></button></div>
+</header>
+<main id="home">
+    <section class="hero">
+        <div class="hero-copy">
+            <p class="eyebrow"><span></span> YOUR NEXT CHAPTER STARTS HERE</p>
+            <h1>Good books.<br><em>Better</em> perspectives.</h1>
+            <p class="hero-text">A little corner of the internet for curious minds. Find stories that stay with you and
+                ideas that move you forward.</p>
+            <div class="hero-actions"><a class="primary-btn" href="#books">Explore the shelves <span>↗</span></a><a
+                    class="text-link" href="#assistant">Help me choose <span>→</span></a></div>
+            <div class="social-proof">
+                <div class="avatar-stack"><span>R</span><span>A</span><span>M</span><span>S</span></div>
+                <div><strong>Loved by 12,000+ readers</strong><small>★★★★★ <span>4.8 average reader
+                            rating</span></small></div>
+            </div>
+        </div>
+        <div class="hero-art" aria-label="Decorative illustration of a stack of books">
+            <div class="sun"></div>
+            <div class="plant plant-one">✳</div>
+            <div class="book book-back"><span>MAKE SPACE<br>FOR IDEAS</span></div>
+            <div class="book book-mid"><span>THE ART OF<br>SLOW LIVING</span></div>
+            <div class="book book-front"><span class="cover-kicker">A FIELD GUIDE
+                    TO</span><strong>CURIOUS<br>MINDS</strong><i>VOL. 01 — KEEP EXPLORING</i></div>
+            <div class="sparkle sparkle-one">✳</div>
+            <div class="sparkle sparkle-two">✦</div>
+            <div class="art-caption">A good book is a good beginning.</div>
+        </div>
+    </section>
+    <section class="benefits">
+        <div><span class="benefit-icon">↗</span>
+            <p><strong>Handpicked, not endless</strong><small>Books worth your time</small></p>
+        </div>
+        <div><span class="benefit-icon">♡</span>
+            <p><strong>For every kind of curious</strong><small>Find your next favourite</small></p>
+        </div>
+        <div><span class="benefit-icon">⌁</span>
+            <p><strong>Easy on your wallet</strong><small>Great reads, fair prices</small></p>
+        </div>
+    </section>
+    <section class="catalog" id="books">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">THE BOOKSHELF</p>
+                <h2>Find your kind of <em>good.</em></h2>
+                <p class="section-subtitle">A few reader favourites to get you going.</p>
+            </div><label class="search-box"><span>⌕</span><input [(ngModel)]="searchTerm"
+                    placeholder="Search title, author..." aria-label="Search books"></label>
+        </div>
+        <div class="filters"><button *ngFor="let category of categories" (click)="chooseCategory(category)"
+                [class.active]="activeCategory === category">{{ category }}</button><span class="result-count">{{
+                filteredBooks.length }} titles</span></div>
+        <div class="book-grid">
+            <article class="book-card" *ngFor="let book of filteredBooks">
+                <div class="cover" [attr.data-category]="book.category"><span class="book-badge" *ngIf="book.badge">{{
+                        book.badge }}</span><span class="cover-emoji">{{ book.cover }}</span><span
+                        class="cover-title">{{ book.title }}</span><span class="cover-author">{{ book.author }}</span>
+                </div>
+                <div class="book-info">
+                    <div class="book-meta"><span>{{ book.category }}</span><span class="rating">★ {{ book.rating
+                            }}</span></div>
+                    <h3>{{ book.title }}</h3>
+                    <p>by {{ book.author }}</p>
+                    <div class="book-buy"><strong>₹{{ book.price }}</strong><button (click)="addToCart(book)"
+                            [attr.aria-label]="'Add ' + book.title + ' to bag'">Add to bag <span>+</span></button></div>
+                </div>
+            </article>
+            <div class="empty-state" *ngIf="filteredBooks.length === 0">No books found. Try another title or category.
+            </div>
+        </div>
+        <p class="notice" role="status" *ngIf="notice">{{ notice }} <button (click)="notice = ''"
+                aria-label="Dismiss notification">×</button></p>
+    </section>
+    <section class="reading-guide" id="assistant">
+        <div class="guide-icon">✳</div>
+        <div class="guide-copy">
+            <p class="eyebrow">A LITTLE HELP FROM BOOKNEST</p>
+            <h2>Not sure what to read? <em>Let's find out.</em></h2>
+            <p>Tell us what you’re curious about. Our demo reading guide will point you toward a book on the shelf.</p>
+        </div>
+        <div class="guide-form"><label for="question">I'm in the mood for...</label>
+            <div class="guide-input"><input id="question" [(ngModel)]="assistantQuestion" (keyup.enter)="askAssistant()"
+                    placeholder="e.g. learning to code, building habits"><button (click)="askAssistant()"
+                    aria-label="Get a book suggestion">→</button></div>
+            <p class="assistant-answer" *ngIf="assistantAnswer">{{ assistantAnswer }}</p><small>Demo feature ·
+                suggestions are generated locally from this sample catalogue.</small>
+        </div>
+    </section>
+    <section class="about" id="about">
+        <p class="eyebrow">A NOTE FROM US</p>
+        <h2>Less scrolling. More <em>turning pages.</em></h2>
+        <p>BookNest is a sample online bookstore built to make browsing simple, accessible and enjoyable — one good
+            recommendation at a time.</p>
+    </section>
+</main>
+<footer><a class="brand" href="#home"><span class="brand-mark">b.</span><span>booknest<span
+                class="brand-dot">.</span></span></a><span>Made for curious minds. © 2026 BookNest</span><a
+        href="#home">Back to top ↑</a></footer>
