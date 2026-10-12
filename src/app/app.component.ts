@@ -2,9 +2,24 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-type Book = { id: number; title: string; author: string; category: string; price: number; rating: number; cover: string; badge?: string; description: string };
+type Book = { 
+  id: number; 
+  title: string; 
+  author: string; 
+  category: string; 
+  price: number; 
+  rating: number; 
+  cover: string; 
+  badge?: string; 
+  description: string 
+};
 
-@Component({ selector: 'app-root', standalone: true, imports: [CommonModule, FormsModule], templateUrl: './app.component.html' })
+@Component({
+   selector: 'app-root', 
+   standalone: true, 
+   imports: [CommonModule, FormsModule], 
+   templateUrl: './app.component.html' })
+
 export class AppComponent {
   searchTerm = '';
   activeCategory = 'All books';
@@ -22,12 +37,16 @@ export class AppComponent {
     { id: 5, title: 'The Psychology of Money', author: 'Morgan Housel', category: 'Business', price: 349, rating: 4.7, cover: '🪙', description: 'Short stories about how people think about wealth, risk and decisions.' },
     { id: 6, title: 'Designing Data-Intensive Applications', author: 'Martin Kleppmann', category: 'Technology', price: 899, rating: 4.9, cover: '🧩', badge: 'For builders', description: 'A deep introduction to the systems behind reliable data applications.' }
   ];
+
   get filteredBooks(): Book[] {
     const term = this.searchTerm.trim().toLowerCase();
     return this.books.filter(book => (this.activeCategory === 'All books' || book.category === this.activeCategory) && (!term || `${book.title} ${book.author} ${book.category}`.toLowerCase().includes(term)));
   }
+
   chooseCategory(category: string): void { this.activeCategory = category; }
+
   addToCart(book: Book): void { this.cartCount++; this.cartTotal += book.price; this.notice = `Added “${book.title}” to your bag.`; }
+  
   askAssistant(): void {
     const q = this.assistantQuestion.toLowerCase();
     if (!q.trim()) { this.assistantAnswer = 'Try asking for a book about coding, habits, money or fiction.'; return; }
